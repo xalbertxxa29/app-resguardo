@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const pageCountSpan = document.getElementById("page-count");
 
   // URL correcta de tu PDF en Firebase
-  const url = 'ejercicios.pdf'; 
+  const url = 'https://firebasestorage.googleapis.com/v0/b/resguardo-b4d86.firebasestorage.app/o/ejercicios.pdf?alt=media&token=7838baff-6380-44d0-a3f2-7c7f9e6a62ec';
 
   let pdfDoc = null;
   let pageNum = 1;
