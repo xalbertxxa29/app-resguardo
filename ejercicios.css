@@ -15,21 +15,35 @@ body {
   height: 95%;
   display: flex; flex-direction: column;
 }
-#back-btn {
-  align-self: flex-start;
+
+/* Contenedor para controles superiores */
+.top-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+#back-btn, #zoom-controls button {
   background: rgba(0,0,0,0.5);
   color: white; border: none; border-radius: 8px;
-  padding: 0.5rem 1rem; cursor: pointer; margin-bottom: 0.5rem;
+  padding: 0.5rem 1rem; cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
 }
+#zoom-controls button {
+  margin-left: 0.5rem;
+}
+
 #pdf-viewer {
   flex: 1;
-  overflow-y: auto;
+  overflow: auto; /* Cambiado a auto para permitir scroll en ambas direcciones */
   border-radius: 10px;
   margin-bottom: 0.5rem;
-  display: flex; justify-content: center;
+  display: flex; justify-content: flex-start; /* Alinea el canvas al hacer zoom */
+  align-items: flex-start;
 }
 #pdf-canvas {
-  max-width: 100%;
+  max-width: none; /* Permite que el canvas crezca con el zoom */
   height: auto;
   border-radius: 5px;
 }

@@ -10,7 +10,13 @@
 <body>
   <div class="viewer-page">
     <div class="viewer-container">
-      <button id="back-btn">← Atrás</button>
+      <div class="top-controls">
+        <button id="back-btn">← Atrás</button>
+        <div id="zoom-controls">
+          <button id="zoom-out">-</button>
+          <button id="zoom-in">+</button>
+        </div>
+      </div>
       
       <div id="pdf-viewer">
         <canvas id="pdf-canvas"></canvas>
