@@ -1,17 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
   const loader = document.getElementById("loader");
   const backBtn = document.getElementById("back-btn");
+  const pdfViewer = document.getElementById("pdf-viewer");
   const pdfCanvas = document.getElementById("pdf-canvas");
   
-  // Controles de Paginación
   const prevPageBtn = document.getElementById("prev-page");
   const nextPageBtn = document.getElementById("next-page");
   const pageNumSpan = document.getElementById("page-num");
   const pageCountSpan = document.getElementById("page-count");
 
-  // Controles de Zoom
-  const zoomInBtn = document.getElementById("zoom-in");
-  const zoomOutBtn = document.getElementById("zoom-out");
+  const zoomBtn = document.getElementById("zoom-btn");
 
   const url = 'ejercicios.pdf';
 
@@ -19,7 +17,10 @@ document.addEventListener("DOMContentLoaded", () => {
   let pageNum = 1;
   let pageRendering = false;
   let pageNumPending = null;
-  let currentScale = 1.5; // Escala de zoom inicial
+  
+  let scaleFit = 1.0; // Escala para ajustar al ancho
+  let scaleZoomed = 2.0; // Nivel de zoom al presionar el botón
+  let isZoomed = false;
 
   const renderPage = (num, scale) => {
     pageRendering = true;
@@ -40,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         loader.style.display = 'none';
 
         if (pageNumPending !== null) {
-          renderPage(pageNumPending, currentScale);
+          renderPage(pageNumPending, isZoomed ? scaleZoomed : scaleFit);
           pageNumPending = null;
         }
       });
@@ -53,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (pageRendering) {
       pageNumPending = num;
     } else {
-      renderPage(num, currentScale);
+      renderPage(num, isZoomed ? scaleZoomed : scaleFit);
     }
   };
 
@@ -71,15 +72,9 @@ document.addEventListener("DOMContentLoaded", () => {
     queueRenderPage(pageNum);
   });
 
-  zoomInBtn.addEventListener('click', () => {
-    currentScale += 0.2;
-    renderPage(pageNum, currentScale);
-  });
-
-  zoomOutBtn.addEventListener('click', () => {
-    if (currentScale <= 0.4) return; // Evita que el zoom sea demasiado pequeño
-    currentScale -= 0.2;
-    renderPage(pageNum, currentScale);
+  zoomBtn.addEventListener('click', () => {
+    isZoomed = !isZoomed; // Alterna el estado del zoom
+    renderPage(pageNum, isZoomed ? scaleZoomed : scaleFit);
   });
   
   backBtn.addEventListener("click", () => {
@@ -90,7 +85,13 @@ document.addEventListener("DOMContentLoaded", () => {
   pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
     pdfDoc = pdfDoc_;
     pageCountSpan.textContent = pdfDoc.numPages;
-    renderPage(pageNum, currentScale);
+
+    // Calcula la escala inicial para que se ajuste al ancho del contenedor
+    return pdfDoc.getPage(1);
+  }).then(page => {
+      const viewport = page.getViewport({ scale: 1.0 });
+      scaleFit = pdfViewer.clientWidth / viewport.width;
+      renderPage(pageNum, scaleFit); // Renderiza la primera página con la escala ajustada
   }).catch(err => {
     console.error("Error al cargar el PDF:", err);
     loader.textContent = "Error al cargar PDF.";

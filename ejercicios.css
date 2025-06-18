@@ -16,34 +16,31 @@ body {
   display: flex; flex-direction: column;
 }
 
-/* Contenedor para controles superiores */
 .top-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.5rem;
 }
-#back-btn, #zoom-controls button {
+#back-btn, #zoom-btn {
   background: rgba(0,0,0,0.5);
   color: white; border: none; border-radius: 8px;
   padding: 0.5rem 1rem; cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.2rem; /* Aumentado para que la lupa se vea bien */
   font-weight: bold;
-}
-#zoom-controls button {
-  margin-left: 0.5rem;
+  line-height: 1;
 }
 
 #pdf-viewer {
   flex: 1;
-  overflow: auto; /* Cambiado a auto para permitir scroll en ambas direcciones */
+  overflow: auto;
   border-radius: 10px;
   margin-bottom: 0.5rem;
-  display: flex; justify-content: flex-start; /* Alinea el canvas al hacer zoom */
-  align-items: flex-start;
+  display: flex;
 }
 #pdf-canvas {
-  max-width: none; /* Permite que el canvas crezca con el zoom */
+  margin: auto; /* Centra el canvas dentro del visor */
+  max-width: none;
   height: auto;
   border-radius: 5px;
 }
