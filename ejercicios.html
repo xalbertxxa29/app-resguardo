@@ -5,13 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Plan de Ejercicios</title>
   <link rel="stylesheet" href="ejercicios.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
 </head>
 <body>
   <div class="viewer-page">
     <div class="viewer-container">
-      <button id="back-btn" class="control-btn">← Atrás</button>
+      <button id="back-btn">← Atrás</button>
+      
+      <div id="pdf-viewer">
+        <canvas id="pdf-canvas"></canvas>
+      </div>
+
+      <div id="pagination-controls">
+        <button id="prev-page">Anterior</button>
+        <span id="page-num"></span> / <span id="page-count"></span>
+        <button id="next-page">Siguiente</button>
+      </div>
+
       <div id="loader" class="loader"></div>
-      <iframe id="pdf-frame" src="https://firebasestorage.googleapis.com/v0/b/resguardo-b4d86.firebasestorage.app/o/ejercicios.pdf?alt=media&token=7838baff-6380-44d0-a3f2-7c7f9e6a62ec"></iframe>
     </div>
   </div>
 
